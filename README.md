@@ -1,6 +1,6 @@
 # matsano
 
-** Challenge Set 1 [8/8]
+  * Challenge Set 1 [2/8]
    - [X] Convert hex to base64
    - [X] Fixed XOR
    - [ ] Single-byte XOR cipher
@@ -9,7 +9,7 @@
    - [ ] Break repeating-key XOR
    - [ ] AES in ECB mode
    - [ ] Detect AES in ECB mode
-** Challenge Set 2 [8/8]
+  * Challenge Set 2 [-/8]
    - [ ] Implement PKCS#7 padding
    - [ ] Implement CBC mode
    - [ ] An ECB/CBC detection oracle
@@ -18,7 +18,7 @@
    - [ ] Byte-at-a-time ECB decryption (Harder)
    - [ ] PKCS#7 padding validation
    - [ ] CBC bitflipping attacks
-** Challenge Set 3 [8/8]
+  * Challenge Set 3 [-/8]
    - [ ] The CBC padding oracle
    - [ ] Implement CTR, the stream cipher mode
    - [ ] Break fixed-nonce CTR mode using substitions
@@ -27,7 +27,7 @@
    - [ ] Crack an MT19937 seed
    - [ ] Clone an MT19937 RNG from its output
    - [ ] Create the MT19937 stream cipher and break it
-** Challenge Set 4 [8/8]
+  * Challenge Set 4 [8/8]
    - [ ] Break "random access read/write" AES CTR
    - [ ] CTR bitflipping
    - [ ] Recover the key from CBC with IV=Key
@@ -36,7 +36,7 @@
    - [ ] Break an MD4 keyed MAC using length extension
    - [ ] Implement and break HMAC-SHA1 with an artificial timing leak
    - [ ] Break HMAC-SHA1 with a slightly less artificial timing leak
-** Challenge Set 5 [/]
+  * Challenge Set 5 [/]
    - [ ] Implement Diffie-Hellman
    - [ ] Implement a MITM key-fixing attack on Diffie-Hellman with parameter injection
    - [ ] Implement DH with negotiated groups, and break with malicious "g" parameters
@@ -45,7 +45,7 @@
    - [ ] Offline dictionary attack on simplified SRP
    - [ ] Implement RSA
    - [ ] Implement an E=3 RSA Broadcast attack
-** Challenge Set 6 [/]
+  * Challenge Set 6 [/]
    - [ ] Implement unpadded message recovery oracle
    - [ ] Bleichenbacher's e=3 RSA Attack
    - [ ] DSA key recovery from nonce
@@ -54,7 +54,7 @@
    - [ ] RSA parity oracle
    - [ ] Bleichenbacher's PKCS 1.5 Padding Oracle (Simple Case)
    - [ ] Bleichenbacher's PKCS 1.5 Padding Oracle (Complete Case)
-** Bonus Challenge Set 7 [/]
+  * Bonus Challenge Set 7 [/]
    - [ ] CBC-MAC Message Forgery
    - [ ] Hashing with CBC-MAC
    - [ ] Compression Ratio Side-Channel Attacks
