@@ -9,6 +9,15 @@ module converters
     end
   end
 
+  function hex_parse_bytes(s::String)
+    if ismatch(r"/[^0-9A-Fa-f]/",s)
+      throw("input is not a hex string!")
+    else
+      p = [parse(Int, s[i:i+1], 16) for i in collect(1:2:(length(s)-1))]
+      return p
+    end
+  end
+
   function hex_to_bytes(s)
     if ismatch(r"/[^0-9A-Fa-f]/",s)
       throw("input is not a hex string!")
