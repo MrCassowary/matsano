@@ -40,7 +40,6 @@ function breakxor(string)
   fkey = 'a'
   chi2min = 1e10
   fin = String[]
-
    for key = 65:122
     v = xor_key(string, key)
     #convert vector to ASCII representation
