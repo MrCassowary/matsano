@@ -73,7 +73,6 @@ function breakxor(string)
       print("potential better key found \n")
       fkey = Char(key)
       chi2min = ChiSqTest(obsv, expv)
-      print(chi2min)
       fin = join(map(Char,xor_key(string, key)),"")
       #convert vector to ASCII representation
     end
