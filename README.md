@@ -1,9 +1,9 @@
 # matsano
 
-  * Challenge Set 1 [2/8]
+  * Challenge Set 1 [3/8]
    - [X] Convert hex to base64
    - [X] Fixed XOR
-   - [ ] Single-byte XOR cipher
+   - [X] Single-byte XOR cipher
    - [ ] Detect single-character XOR
    - [ ] Implement repeating-key XOR
    - [ ] Break repeating-key XOR
