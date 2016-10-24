@@ -1,17 +1,18 @@
 module CryptoTools
 using converters
+using DataStructures
 function hex_xor(a,b)
     c = converters.hex_parse(a) $ converters.hex_parse(b)
     c = join(map(hex, c),"")
     return c
   end
   function ChiSqTest(obs, expt)
-    chi2 = 0
     if length(obs) == length(expt)
       chi2 = sum(((obs - expt).^2)./expt)
     else
       throw("Test vectors are not of same length")
     end
+    return chi2
 end
 
 #function scorestring(str)
@@ -35,17 +36,69 @@ function xor_key(string, key)
     return a
 end
 
-v = xor_key("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736",66)
+function breakxor(string)
+  fkey = 'a'
+  chi2min = 1e10
+  fin = String[]
+  key = 88
+   for key = 65:122
+    v = xor_key(string, key)
+    #convert vector to ASCII representation
+    v = map(Char, v)
+    v = map(lowercase, v)
+    n = length(v) #Determine length of input string
+    t = n #duplicate length for loop
+    #loop below scans backwards and deletes values from the string that aren't in our alphabet of interest
+    while t > 0
+      if !haskey(english_freq, v[t])
+        deleteat!(v,t)
+      end
+      t = t - 1
+    end
+    #make a vector of expected observations
+    dind = [map(Char,collect((97:122))); ' ']
+    expv = map(x->english_freq[x], dind)
+    #count the number of occurences of acceptable characters
+    cdict = counter(v)
+    #predclare observation vector and normalise the entries from the cdict
+    obsv = Float32[]
+    for i = 1:27
+      if haskey(cdict, dind[i])
+        push!(obsv, cdict[dind[i]]/n)
+      else
+        push!(obsv, 0.0)
+      end
+    end
 
-ch = map(Char, v)
-n = length(ch)
-map(x->haskey(english_freq, x), ch)
-t = n
-while t > 0
-  if !haskey(english_freq, ch[t])
-    deleteat!(ch,t)
+    if ChiSqTest(obsv, expv) < chi2min
+      print("potential better key found \n")
+      fkey = Char(key)
+      chi2min = ChiSqTest(obsv, expv)
+      print(chi2min)
+      fin = join(map(Char,xor_key(string, key)),"")
+      #convert vector to ASCII representation
+    end
   end
-  t = t - 1
+  #return fkey, fin
+  return fin, fkey, chi2min
 end
-cdict = counter(ch)
+breakxor(s)
+
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
