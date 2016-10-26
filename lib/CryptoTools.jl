@@ -1,7 +1,7 @@
 module CryptoTools
-using converters
-using DataStructures
-function hex_xor(a,b)
+  using converters
+  using DataStructures
+  function hex_xor(a,b)
     c = converters.hex_parse(a) $ converters.hex_parse(b)
     c = join(map(hex, c),"")
     return c
@@ -13,7 +13,7 @@ function hex_xor(a,b)
       throw("Test vectors are not of same length")
     end
     return chi2
-end
+  end
 
 #function scorestring(str)
     english_freq= Dict('a' => 0.0651738, 'b' => 0.0124248, 'c' => 0.0217339,
@@ -27,74 +27,58 @@ end
                     'y' => 0.0145984, 'z' => 0.0007836, ' ' => 0.1918182)
 
 #end
-function xor_key(string, key)
-  a = Int[]
-  string = converters.hex_parse_bytes(string)
+  function xor_key(string, key)
+    a = Int[]
+    string = converters.hex_parse_bytes(string)
     for i = 1:length(string)
       push!(a,key $ string[i])
     end
     return a
-end
+  end
 
-function breakxor(string)
-  fkey = 'a'
-  chi2min = 1e10
-  fin = String[]
-   for key = 65:122
-    v = xor_key(string, key)
+  function breakxor(string)
+    fkey = 'a'
+    chi2min = 1e10
+    fin = String[]
+    for key = 33:126
+      v = xor_key(string, key)
     #convert vector to ASCII representation
-    v = map(Char, v)
-    v = map(lowercase, v)
-    n = length(v) #Determine length of input string
-    t = n #duplicate length for loop
+      v = map(Char, v)
+      v = map(lowercase, v)
+      n = length(v) #Determine length of input string
+      t = n #duplicate length for loop
     #loop below scans backwards and deletes values from the string that aren't in our alphabet of interest
-    while t > 0
-      if !haskey(english_freq, v[t])
-        deleteat!(v,t)
+      while t > 0
+        if !haskey(english_freq, v[t])
+          deleteat!(v,t)
+        end
+        t = t - 1
       end
-      t = t - 1
-    end
     #make a vector of expected observations
-    dind = [map(Char,collect((97:122))); ' ']
-    expv = map(x->english_freq[x], dind)
+      dind = [map(Char,collect((97:122))); ' ']
+      expv = map(x->english_freq[x], dind)
     #count the number of occurences of acceptable characters
-    cdict = counter(v)
+      cdict = counter(v)
     #predclare observation vector and normalise the entries from the cdict
-    obsv = Float32[]
-    for i = 1:27
-      if haskey(cdict, dind[i])
-        push!(obsv, cdict[dind[i]]/n)
-      else
-        push!(obsv, 0.0)
+      obsv = Float32[]
+      for i = 1:27
+        if haskey(cdict, dind[i])
+          push!(obsv, cdict[dind[i]]/n)
+        else
+          push!(obsv, 0.0)
+        end
       end
-    end
 
-    if ChiSqTest(obsv, expv) < chi2min
-      print("potential better key found \n")
-      fkey = Char(key)
-      chi2min = ChiSqTest(obsv, expv)
-      fin = join(map(Char,xor_key(string, key)),"")
+      if ChiSqTest(obsv, expv) < chi2min
+        print("potential better key found \n")
+        fkey = Char(key)
+        chi2min = ChiSqTest(obsv, expv)
+        fin = join(map(Char,xor_key(string, key)),"")
       #convert vector to ASCII representation
-    end
+      end
   end
   #return fkey, fin
-  return fkey, fin
-end
-breakxor("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736")
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return fkey, fin
+  end
+    breakxor("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736")
 end
